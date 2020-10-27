@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:siap/models/layout/colores.dart';
-import 'package:siap/views/questionnaires/targets/targetsElemsList.dart';
+import 'package:siap_full/models/layout/colores.dart';
+import 'package:siap_full/views/questionnaires/targets/targetsElemsList.dart';
 
 import 'targetsElemsAdd.dart';
 
 class UserTarget extends StatefulWidget {
-
   Map datos;
   UserTarget({this.datos});
 
@@ -14,7 +13,6 @@ class UserTarget extends StatefulWidget {
 }
 
 class UserTargetState extends State<UserTarget> {
-
   GlobalKey<TargetsElemsListState> KeyList = GlobalKey();
 
   @override
@@ -29,10 +27,9 @@ class UserTargetState extends State<UserTarget> {
               child: Text(
                 widget.datos['name'],
                 style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: colores.fontColorBar
-                ),
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: colores.fontColorBar),
               ),
             ),
             color: colores.colorBar,
@@ -45,13 +42,17 @@ class UserTargetState extends State<UserTarget> {
             addStructure: widget.datos['addStructure'],
             KeyList: KeyList,
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           TargetsElemsList(
-            key:KeyList,
+            key: KeyList,
             targetsId: widget.datos['id'],
             usersTargetsId: widget.datos['utId'],
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
         ],
       ),
     );

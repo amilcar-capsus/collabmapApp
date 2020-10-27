@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:siap/models/cuestionario/checklist.dart';
-import 'package:siap/models/conexiones/DB.dart';
+import 'package:siap_full/models/cuestionario/checklist.dart';
+import 'package:siap_full/models/conexiones/DB.dart';
 
 import 'dart:io';
 import 'dart:async';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
-
-
 class FotografiasInst extends StatelessWidget {
-
   Checklist chk;
   FotografiasInst({this.chk});
 
   @override
   Widget build(BuildContext context) {
-
-
     List<Widget> rows = <Widget>[];
 
-    for(var i in chk.fotosInst.keys){
-      rows.add(FotoInst(chk: chk,fotoId: i,nombre: chk.fotosInst[i],));
+    for (var i in chk.fotosInst.keys) {
+      rows.add(FotoInst(
+        chk: chk,
+        fotoId: i,
+        nombre: chk.fotosInst[i],
+      ));
     }
 
     return Container(
@@ -32,23 +31,18 @@ class FotografiasInst extends StatelessWidget {
   }
 }
 
-
-
 class FotoInst extends StatefulWidget {
-
   Checklist chk;
   String fotoId;
   String nombre;
 
-
-  FotoInst({this.chk,this.fotoId,this.nombre});
+  FotoInst({this.chk, this.fotoId, this.nombre});
 
   @override
   FotoInstState createState() => FotoInstState();
 }
 
 class FotoInstState extends State<FotoInst> {
-
   String path;
   Directory directory;
 
@@ -56,7 +50,7 @@ class FotoInstState extends State<FotoInst> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: getFotografia(),
-      builder: (context,snapshot){
+      builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
             return Text('');
@@ -64,7 +58,7 @@ class FotoInstState extends State<FotoInst> {
           case ConnectionState.waiting:
             return Text('Esperando resultados');
           case ConnectionState.done:
-            if (snapshot.hasError){
+            if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             }
 //            print('= = = = = SNAPSHOT = = = =');
@@ -72,31 +66,35 @@ class FotoInstState extends State<FotoInst> {
 
             File imagen;
             var widgetImg;
-            if(snapshot.data != null){
+            if (snapshot.data != null) {
               imagen = File('${path}/${snapshot.data['archivo']}');
-              var tamano = (MediaQuery.of(context).size.width*.3)-10;
+              var tamano = (MediaQuery.of(context).size.width * .3) - 10;
               widgetImg = Container(
                 padding: EdgeInsets.all(5),
                 child: Column(
                   children: <Widget>[
-                    Image.file(imagen,width: tamano,),
+                    Image.file(
+                      imagen,
+                      width: tamano,
+                    ),
                     Container(
                       child: FlatButton(
-                          onPressed: (){
+                          onPressed: () {
                             delImg(snapshot.data);
                           },
-                          child: Icon(Icons.delete,size: 20,color: Colors.red,)
-                      ),
+                          child: Icon(
+                            Icons.delete,
+                            size: 20,
+                            color: Colors.red,
+                          )),
                     )
                   ],
                 ),
               );
-
             }
 
-
             return Container(
-              margin: EdgeInsets.only(top: 5,bottom: 5),
+              margin: EdgeInsets.only(top: 5, bottom: 5),
               child: Row(
                 children: <Widget>[
                   Expanded(
@@ -105,9 +103,8 @@ class FotoInstState extends State<FotoInst> {
                   ),
                   Expanded(
                     flex: 2,
-                    child: snapshot.data == null?
-                      botonesFotografia():
-                      widgetImg,
+                    child:
+                        snapshot.data == null ? botonesFotografia() : widgetImg,
                   ),
                 ],
               ),
@@ -115,7 +112,6 @@ class FotoInstState extends State<FotoInst> {
           default:
             return Column();
         }
-
       },
     );
   }
@@ -125,8 +121,9 @@ class FotoInstState extends State<FotoInst> {
     File picture = await ImagePicker.pickImage(
         source: ImageSource.camera, maxWidth: 1000.0, maxHeight: 1000.0);
 
-    if(picture != null){
-      var directory = await getApplicationDocumentsDirectory(); // AppData folder path
+    if (picture != null) {
+      var directory =
+          await getApplicationDocumentsDirectory(); // AppData folder path
       var vId = widget.chk.vId;
 //      print('====VID====');
 //      print(vId);
@@ -134,7 +131,7 @@ class FotoInstState extends State<FotoInst> {
       var path = '${directory.path}/$vId';
 
       var existeDirVisita = await Directory(path).exists();
-      if(!existeDirVisita){
+      if (!existeDirVisita) {
         await creaDirectorio(path);
       }
 
@@ -150,17 +147,17 @@ class FotoInstState extends State<FotoInst> {
   }
 
   Future usarFoto() async {
-
     File picture = await ImagePicker.pickImage(
         source: ImageSource.gallery, maxWidth: 1000.0, maxHeight: 1000.0);
-    if(picture != null){
-      var directory = await getApplicationDocumentsDirectory(); // AppData folder path
+    if (picture != null) {
+      var directory =
+          await getApplicationDocumentsDirectory(); // AppData folder path
       var vId = widget.chk.vId;
 
       var path = '${directory.path}/$vId';
 
       var existeDirVisita = await Directory(path).exists();
-      if(!existeDirVisita){
+      if (!existeDirVisita) {
         await creaDirectorio(path);
       }
 
@@ -172,20 +169,16 @@ class FotoInstState extends State<FotoInst> {
       setState(() {
         image = picture;
       });
-
     }
   }
 
   creaDirectorio(path) async {
-    await Directory(path).create(recursive: true)
-        .then((Directory directory){
+    await Directory(path).create(recursive: true).then((Directory directory) {
       print(directory.path);
     });
   }
 
-
-
-  botonesFotografia(){
+  botonesFotografia() {
     return Align(
       alignment: Alignment.topRight,
       child: Container(
@@ -202,7 +195,6 @@ class FotoInstState extends State<FotoInst> {
               child: Icon(Icons.camera_enhance),
               onPressed: tomarFoto,
             ),
-
           ],
         ),
       ),
@@ -238,7 +230,7 @@ class FotoInstState extends State<FotoInst> {
               onPressed: () async {
                 await db.delete('Multimedia', ' id = ${img['id']}', []);
                 File imagen = File('${path}/${img['archivo']}');
-                imagen.delete(recursive:true);
+                imagen.delete(recursive: true);
                 Navigator.of(context).pop();
                 setState(() {
 //                  del = true;
@@ -249,15 +241,11 @@ class FotoInstState extends State<FotoInst> {
         );
       },
     );
-
   }
-
-
 
   getFotografia() async {
     directory = await getApplicationDocumentsDirectory(); // AppData folder path
     path = '${directory.path}/${widget.chk.vId}';
-
 
     DB db = DB.instance;
     String sql = '''
@@ -269,12 +257,10 @@ class FotoInstState extends State<FotoInst> {
     var foto = await db.query(sql);
 //    print('------- foto -------');
 //    print(foto);
-    if(foto == null){
+    if (foto == null) {
       return null;
-    }else{
+    } else {
       return foto[0];
     }
   }
-
-
 }

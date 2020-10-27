@@ -1,51 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'map.dart';
-import 'package:siap/models/conexiones/DB.dart';
-import 'package:siap/models/conexiones/api.dart';
-import 'package:siap/models/layout/iconos.dart';
+import 'package:siap_full/models/conexiones/DB.dart';
+import 'package:siap_full/models/conexiones/api.dart';
+import 'package:siap_full/models/layout/iconos.dart';
 import 'package:poly/poly.dart' as Poly;
-import 'package:siap/models/translations.dart';
-
-
+import 'package:siap_full/models/translations.dart';
 
 class DrawerEdt extends StatefulWidget {
-
   GlobalKey<MapWidgetState> keyMapa = GlobalKey();
   Map question;
   var vId;
 
-  DrawerEdt({
-    this.keyMapa,
-    this.question,
-    this.vId
-  });
+  DrawerEdt({this.keyMapa, this.question, this.vId});
 
   @override
   DrawerEdtState createState() => DrawerEdtState();
 }
 
 class DrawerEdtState extends State<DrawerEdt> {
-
   var estado;
   Poly.Polygon bound;
 
   @override
   Widget build(BuildContext context) {
-
 //    print('north: ${widget.keyMapa.currentState.north}');
 //    print('south: ${widget.keyMapa.currentState.south}');
 //    print('east: ${widget.keyMapa.currentState.east}');
 //    print('west: ${widget.keyMapa.currentState.west}');
     List<Poly.Point> puntosBounds = [];
-    puntosBounds.add(Poly.Point(widget.keyMapa.currentState.north,widget.keyMapa.currentState.west));
-    puntosBounds.add(Poly.Point(widget.keyMapa.currentState.north,widget.keyMapa.currentState.east));
-    puntosBounds.add(Poly.Point(widget.keyMapa.currentState.south,widget.keyMapa.currentState.east));
-    puntosBounds.add(Poly.Point(widget.keyMapa.currentState.south,widget.keyMapa.currentState.west));
+    puntosBounds.add(Poly.Point(
+        widget.keyMapa.currentState.north, widget.keyMapa.currentState.west));
+    puntosBounds.add(Poly.Point(
+        widget.keyMapa.currentState.north, widget.keyMapa.currentState.east));
+    puntosBounds.add(Poly.Point(
+        widget.keyMapa.currentState.south, widget.keyMapa.currentState.east));
+    puntosBounds.add(Poly.Point(
+        widget.keyMapa.currentState.south, widget.keyMapa.currentState.west));
 
     bound = Poly.Polygon(puntosBounds);
 
-    void cerrarSesion() async{
+    void cerrarSesion() async {
       SharedPreferences userData = await SharedPreferences.getInstance();
       userData.remove('login');
       userData.remove('username');
@@ -86,7 +81,7 @@ class DrawerEdtState extends State<DrawerEdt> {
           ),
           FutureBuilder(
             future: getProblems(),
-            builder: (context,snapshot){
+            builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
                   return Text('');
@@ -94,7 +89,7 @@ class DrawerEdtState extends State<DrawerEdt> {
                 case ConnectionState.waiting:
                   return Text('Esperando resultados...');
                 case ConnectionState.done:
-                  if (snapshot.hasError){
+                  if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   }
 
@@ -104,17 +99,18 @@ class DrawerEdtState extends State<DrawerEdt> {
                     padding: EdgeInsets.all(15),
                     child: Column(
 //                crossAxisAlignment: CrossAxisAlignment.center,
-                      children: snapshot.data.map(
-                          (problem){
-                            return problema(problem:problem,index:problem['index']);
-                          }
-                      ).toList().cast<Widget>(),
+                      children: snapshot.data
+                          .map((problem) {
+                            return problema(
+                                problem: problem, index: problem['index']);
+                          })
+                          .toList()
+                          .cast<Widget>(),
                     ),
                   );
                 default:
                   return Container();
               }
-
             },
           ),
         ],
@@ -125,22 +121,21 @@ class DrawerEdtState extends State<DrawerEdt> {
   Future<List> getProblems() async {
     DB db = DB.instance;
 
-
     var ansId;
-    var ans = await db.query("SELECT * FROM RespuestasVisita WHERE preguntasId = ${widget.question['id']} AND visitasId = ${widget.vId}");
-    if(ans == null){
-      Map<String,dynamic> dAns = Map();
+    var ans = await db.query(
+        "SELECT * FROM RespuestasVisita WHERE preguntasId = ${widget.question['id']} AND visitasId = ${widget.vId}");
+    if (ans == null) {
+      Map<String, dynamic> dAns = Map();
       dAns['visitasId'] = widget.vId;
       dAns['preguntasId'] = widget.question['id'];
       dAns['valor'] = 'spatial';
       dAns['new'] = 1;
       ansId = await db.insert('RespuestasVisita', dAns, true);
       print('- - - - -aca- - - - -');
-    }else{
+    } else {
       ansId = ans[0]['id'];
       print('- - - - - alla - - - -');
     }
-
 
     List problemsDB = await db.query('''SELECT * 
       FROM problems 
@@ -150,14 +145,13 @@ class DrawerEdtState extends State<DrawerEdt> {
     problemsDB ??= [];
     List problems = [];
 
-
-    for(int i = 0;i<problemsDB.length;i++){
+    for (int i = 0; i < problemsDB.length; i++) {
       bool puntoDentro = false;
-      List puntos = await db.query("SELECT * FROM points WHERE problemsId = ${problemsDB[i]['id']}");
-      for(int j = 0;j<puntos.length;j++){
-
-        Poly.Point punto = Poly.Point(puntos[j]['lat'],puntos[j]['lng']);
-        if(bound.isPointInside(punto)){
+      List puntos = await db.query(
+          "SELECT * FROM points WHERE problemsId = ${problemsDB[i]['id']}");
+      for (int j = 0; j < puntos.length; j++) {
+        Poly.Point punto = Poly.Point(puntos[j]['lat'], puntos[j]['lng']);
+        if (bound.isPointInside(punto)) {
           puntoDentro = true;
           break;
         }
@@ -166,28 +160,34 @@ class DrawerEdtState extends State<DrawerEdt> {
 
       problem['index'] = i;
 
-      if(puntoDentro){
+      if (puntoDentro) {
         problems.add(problem);
       }
-
     }
 
     print('PROBLEMS: $problems');
     return problems;
   }
 
-  Widget problema({Map problem,int index}){
+  Widget problema({Map problem, int index}) {
     var icono;
 
-    switch(problem['type']){
+    switch (problem['type']) {
       case 'Marker':
-        icono = Icon(Icons.location_on,color: Colors.grey[600],);
+        icono = Icon(
+          Icons.location_on,
+          color: Colors.grey[600],
+        );
         break;
       case 'Polyline':
-        icono = Icono(svgName: 'polyline',width: 35,color: Colors.grey[600],);
+        icono = Icono(
+          svgName: 'polyline',
+          width: 35,
+          color: Colors.grey[600],
+        );
         break;
       case 'Polygon':
-        icono = Icono(svgName: 'polygon',width: 35,color: Colors.black);
+        icono = Icono(svgName: 'polygon', width: 35, color: Colors.black);
         break;
     }
 
@@ -195,16 +195,21 @@ class DrawerEdtState extends State<DrawerEdt> {
     bool editable = true;
 //    print('PROBLEM: $problem, editableC: ${widget.keyMapa.currentState.widget.datos['edit_inputs']}');
 //    if(!widget.keyMapa.currentState.widget.datos['edit_inputs']){
-    if(!false){
+    if (!false) {
       print('ENTRA ACA');
-      if(problem['idServer'] != null){
+      if (problem['idServer'] != null) {
         editable = false;
-      }else{
+      } else {
         editable = true;
       }
     }
 
-    Future<void> EditBtns({BuildContext context,String texto,int problemId,int problemIndex, String type}) async {
+    Future<void> EditBtns(
+        {BuildContext context,
+        String texto,
+        int problemId,
+        int problemIndex,
+        String type}) async {
       return showDialog<void>(
         context: context,
         barrierDismissible: false, // user must tap button!
@@ -224,18 +229,19 @@ class DrawerEdtState extends State<DrawerEdt> {
                     child: Container(
                       width: double.infinity,
                       child: Text(
-                        Translations.of(context).text('geometries').toUpperCase(),
-                        style: TextStyle(
-                          color: Colors.grey
-                        ),
+                        Translations.of(context)
+                            .text('geometries')
+                            .toUpperCase(),
+                        style: TextStyle(color: Colors.grey),
                       ),
                     ),
                     color: Colors.white,
-                    onPressed: (){
+                    onPressed: () {
                       widget.keyMapa.currentState.setEdtProblem(
                         problemId: problem['id'],
                         problemIndex: index,
-                        type: problem['type'],);
+                        type: problem['type'],
+                      );
                       Navigator.of(context).pop();
                       Navigator.of(context).pop();
                     },
@@ -243,26 +249,27 @@ class DrawerEdtState extends State<DrawerEdt> {
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.grey[200]
-                      )
-                    ),
+                        border: Border.all(color: Colors.grey[200])),
                   ),
                   FlatButton(
                     child: Container(
                       width: double.infinity,
                       child: Text(
-                        Translations.of(context).text('general_info').toUpperCase(),
-                        style: TextStyle(
-                            color: Colors.grey
-                        ),
+                        Translations.of(context)
+                            .text('general_info')
+                            .toUpperCase(),
+                        style: TextStyle(color: Colors.grey),
                       ),
                     ),
                     color: Colors.white,
-                    onPressed: (){
+                    onPressed: () {
                       Navigator.of(context).pop();
                       Navigator.of(context).pop();
-                      widget.keyMapa.currentState.addProblem(context: context,edit: true,problem: problem,editable: editable);
+                      widget.keyMapa.currentState.addProblem(
+                          context: context,
+                          edit: true,
+                          problem: problem,
+                          editable: editable);
                     },
                   ),
                 ],
@@ -281,7 +288,6 @@ class DrawerEdtState extends State<DrawerEdt> {
         },
       );
     }
-
 
     return Card(
       child: Container(
@@ -303,9 +309,7 @@ class DrawerEdtState extends State<DrawerEdt> {
               flex: 5,
               child: Text(
                 '${problem['name']}',
-                style: TextStyle(
-                  color: Colors.grey[600]
-                ),
+                style: TextStyle(color: Colors.grey[600]),
               ),
             ),
             Expanded(
@@ -314,10 +318,10 @@ class DrawerEdtState extends State<DrawerEdt> {
                 padding: EdgeInsets.all(0),
                 icon: Icon(
                   Icons.edit,
-                  color: editable?Colors.grey[600]:Colors.transparent,
+                  color: editable ? Colors.grey[600] : Colors.transparent,
                 ),
-                onPressed: (){
-                  if(editable){
+                onPressed: () {
+                  if (editable) {
                     EditBtns(
                       context: context,
                       texto: Translations.of(context).text('edit'),
@@ -337,12 +341,21 @@ class DrawerEdtState extends State<DrawerEdt> {
               flex: 1,
               child: IconButton(
                 padding: EdgeInsets.all(0),
-                icon: Icon(Icons.info,color: Colors.grey[600],),
-                onPressed: (){
+                icon: Icon(
+                  Icons.info,
+                  color: Colors.grey[600],
+                ),
+                onPressed: () {
 //                  print('click');
-                  print('(context: $context,edit: true,problem: $problem,editable: $editable,fix: true)');
+                  print(
+                      '(context: $context,edit: true,problem: $problem,editable: $editable,fix: true)');
                   Navigator.of(context).pop();
-                  widget.keyMapa.currentState.addProblem(context: context,edit: true,problem: problem,editable: editable,fix: false);
+                  widget.keyMapa.currentState.addProblem(
+                      context: context,
+                      edit: true,
+                      problem: problem,
+                      editable: editable,
+                      fix: false);
                 },
               ),
             ),
@@ -356,62 +369,63 @@ class DrawerEdtState extends State<DrawerEdt> {
                 padding: EdgeInsets.all(0),
                 icon: Icon(
                   Icons.delete,
-                  color: editable?Colors.grey[600]:Colors.transparent,
+                  color: editable ? Colors.grey[600] : Colors.transparent,
                 ),
-                onPressed: (){
-                  if(editable){
-
+                onPressed: () {
+                  if (editable) {
                     emergente(
-                      context: context,
-                      content: Container(
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              child: Center(
-                                child: Icono(
-                                  svgName: 'alerta',
-                                  color: Color(0xFFDBBD3E),
-                                  width: MediaQuery.of(context).size.height*.18,
+                        context: context,
+                        content: Container(
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                child: Center(
+                                  child: Icono(
+                                    svgName: 'alerta',
+                                    color: Color(0xFFDBBD3E),
+                                    width: MediaQuery.of(context).size.height *
+                                        .18,
+                                  ),
                                 ),
+                                decoration: BoxDecoration(
+                                    border:
+                                        Border.all(color: Colors.transparent)),
                               ),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.transparent
-                                )
+                              SizedBox(
+                                height: 5,
                               ),
-                            ),
-                            SizedBox(height: 5,),
-                            Text(
-                              Translations.of(context).text('confdelete').toUpperCase(),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.bold
-                              ),
-                            )
-                          ],
+                              Text(
+                                Translations.of(context)
+                                    .text('confdelete')
+                                    .toUpperCase(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      actions: [
-                        FlatButton(
-                          child: Text(Translations.of(context).text('cancel')),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                        FlatButton(
-                          child: Text(Translations.of(context).text('confirm')),
-                          onPressed: () {
-                            DB db = DB.instance;
-                            widget.keyMapa.currentState.delProblem(problem: problem,index: index);
-                            Navigator.of(context).pop();
-                            setState(() {});
-                          },
-                        ),
-                      ]
-
-                    );
-
+                        actions: [
+                          FlatButton(
+                            child:
+                                Text(Translations.of(context).text('cancel')),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          FlatButton(
+                            child:
+                                Text(Translations.of(context).text('confirm')),
+                            onPressed: () {
+                              DB db = DB.instance;
+                              widget.keyMapa.currentState
+                                  .delProblem(problem: problem, index: index);
+                              Navigator.of(context).pop();
+                              setState(() {});
+                            },
+                          ),
+                        ]);
                   }
                 },
               ),
@@ -421,6 +435,4 @@ class DrawerEdtState extends State<DrawerEdt> {
       ),
     );
   }
-
 }
-

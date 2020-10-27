@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:siap/models/conexiones/DB.dart';
+import 'package:siap_full/models/conexiones/DB.dart';
 import 'dart:io';
-import 'package:siap/models/conexiones/api.dart';
+import 'package:siap_full/models/conexiones/api.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:siap/models/translations.dart';
-import 'package:siap/models/componentes/colorLoader.dart';
+import 'package:siap_full/models/translations.dart';
+import 'package:siap_full/models/componentes/colorLoader.dart';
 import 'package:dio/dio.dart';
 
-
-
 class DownloadMap extends StatefulWidget {
-
   var consultationId;
   DownloadMap({this.consultationId});
 
@@ -21,10 +18,9 @@ class DownloadMap extends StatefulWidget {
 class DownloadMapState extends State<DownloadMap> {
   @override
   Widget build(BuildContext context) {
-
     return FutureBuilder(
       future: getDatos(),
-      builder: (context,snapshot){
+      builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
             return Container();
@@ -32,49 +28,45 @@ class DownloadMapState extends State<DownloadMap> {
           case ConnectionState.waiting:
             return Container();
           case ConnectionState.done:
-            if (snapshot.hasError){
+            if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             }
             List elementos = snapshot.data;
 
-            if(snapshot.data.length == 0){
+            if (snapshot.data.length == 0) {
               return Container();
             }
 
             List<Widget> mapas = [];
-            mapas.add(
-              Text(
-                Translations.of(context).text('download_title').toUpperCase(),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.bold
-                ),
-              )
-            );
+            mapas.add(Text(
+              Translations.of(context).text('download_title').toUpperCase(),
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+            ));
 
-            mapas.add(SizedBox(height: 10,));
+            mapas.add(SizedBox(
+              height: 10,
+            ));
 
             double total = 0;
-            for(int i = 0; i < elementos.length; i++){
+            for (int i = 0; i < elementos.length; i++) {
               var m = elementos[i];
               var row = Row(
-
                 children: <Widget>[
                   Expanded(
                     flex: 1,
-                    child: Text('${i+1}'),
+                    child: Text('${i + 1}'),
                   ),
                   Expanded(
                     flex: 2,
                     child: Text(
-                        '${m['mapName']}'.toUpperCase(),
+                      '${m['mapName']}'.toUpperCase(),
                     ),
                   ),
                   Expanded(
                     flex: 1,
                     child: Text(
-                        '${m['tamano']} MB'.toUpperCase(),
+                      '${m['tamano']} MB'.toUpperCase(),
                     ),
                   ),
                 ],
@@ -83,10 +75,11 @@ class DownloadMapState extends State<DownloadMap> {
               total += double.parse(m['tamano']);
 
               mapas.add(row);
-
             }
 
-            mapas.add(SizedBox(height: 10,));
+            mapas.add(SizedBox(
+              height: 10,
+            ));
 
             var row = Row(
               children: <Widget>[
@@ -98,19 +91,14 @@ class DownloadMapState extends State<DownloadMap> {
                   flex: 2,
                   child: Text(
                     'Total'.toUpperCase(),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
                 Expanded(
                   flex: 1,
                   child: Text(
                     '${total} MB'.toUpperCase(),
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold
-                    ),
-
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
@@ -121,64 +109,64 @@ class DownloadMapState extends State<DownloadMap> {
             return Container(
               padding: EdgeInsets.all(15),
               child: RaisedButton(
-                child: Text(Translations.of(context).text("mapsfordownload").toUpperCase()),
-                onPressed: (){
+                child: Text(Translations.of(context)
+                    .text("mapsfordownload")
+                    .toUpperCase()),
+                onPressed: () {
                   emergente(
-                    context: context,
-                    actions: [
-                      FlatButton(
-                        child: Text(Translations.of(context).text('cancel')),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      FlatButton(
-                        child: Text(Translations.of(context).text('ok')),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                          emergente(
-                            content: Container(
-                              child: Column(
-                                children: <Widget>[
-                                  Container(
-                                    padding: EdgeInsets.all(10),
-                                    child: ColorLoader3(
-                                      radius: 50,
-                                      dotRadius: 15,
-                                    ),
+                      context: context,
+                      actions: [
+                        FlatButton(
+                          child: Text(Translations.of(context).text('cancel')),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        FlatButton(
+                          child: Text(Translations.of(context).text('ok')),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            emergente(
+                                content: Container(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Container(
+                                        padding: EdgeInsets.all(10),
+                                        child: ColorLoader3(
+                                          radius: 50,
+                                          dotRadius: 15,
+                                        ),
+                                      ),
+                                      Descargando(
+                                        mapas: elementos,
+                                        reset: reset,
+                                      ),
+                                    ],
                                   ),
-                                  Descargando(mapas: elementos,reset: reset,),
-                                ],
-                              ),
-                            ),
-                            actions: [
-                              Container()
-                            ],
-                            context: context
-                          );
-                        },
-                      )
-                    ],
-                    content: Container(
-                      child: Column(
-                        children: mapas,
-                      ),
-                    )
-                  );
+                                ),
+                                actions: [Container()],
+                                context: context);
+                          },
+                        )
+                      ],
+                      content: Container(
+                        child: Column(
+                          children: mapas,
+                        ),
+                      ));
                 },
               ),
             );
           default:
             return Column();
         }
-
       },
     );
   }
 
   getDatos() async {
-    DB db  = DB.instance;
-    
+    DB db = DB.instance;
+
     var questions = await db.query('''
       SELECT q.id, q.mapFile, q.mapUrl, q.mapName, q.content as question, s.name as survey  
       FROM surveys s
@@ -192,114 +180,100 @@ class DownloadMapState extends State<DownloadMap> {
     String dir = (await getApplicationDocumentsDirectory()).path;
 
     Directory mapsDir = await Directory('${dir}/maps');
-    if(!(await mapsDir.exists())){
+    if (!(await mapsDir.exists())) {
       mapsDir.create(recursive: true);
     }
 
     String path = '${dir}/maps';
 
-
     List mapas = [];
     questions ??= [];
 //    print('QuestionsL : ${questions.length}');
-    for(int i = 0;i<questions.length;i++){
+    for (int i = 0; i < questions.length; i++) {
 //      print('Questions $i : $questions');
 
       Map q = questions[i];
 
-      if(q['mapFile'] == null){
+      if (q['mapFile'] == null) {
         continue;
       }
 //      print('Mapa: ${path}/${q['mapFile']} ');
       File mapa = await File('${path}/${q['mapFile']}');
 
-
-
-      if( !(await mapa.exists()) ){
+      if (!(await mapa.exists())) {
         Map tmp = Map();
         tmp['mapFile'] = q['mapFile'];
         tmp['mapUrl'] = q['mapUrl'];
         tmp['mapName'] = q['mapName'];
 
-        var tamano = await checaTamano(
-          serverPath: tmp['mapUrl']
-        );
+        var tamano = await checaTamano(serverPath: tmp['mapUrl']);
         tmp['tamano'] = tamano;
         mapas.add(tmp);
-
       }
-
     }
 //    print('mapas: $mapas');
 
     return mapas;
   }
 
-  reset(){
+  reset() {
     setState(() {});
   }
-
 }
 
 class Descargando extends StatefulWidget {
-
   List mapas;
   var reset;
 
-  Descargando({this.mapas,this.reset});
+  Descargando({this.mapas, this.reset});
 
   @override
   DescargandoState createState() => DescargandoState();
 }
 
 class DescargandoState extends State<Descargando> {
-
   var progreso = '';
   var fileName = '';
   bool finalizado = false;
 
   @override
-  initState(){
+  initState() {
     super.initState();
     descargaAll();
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       child: Column(
         children: <Widget>[
           Text(
             'file: $fileName'.toUpperCase(),
-            style: TextStyle(
-              color: Colors.grey,
-              fontWeight: FontWeight.bold
-            ),
+            style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
           ),
           Text(
             '$progreso',
-            style: TextStyle(
-                color: Colors.grey,
-                fontWeight: FontWeight.bold
-            ),
-
+            style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 10,),
-          finalizado?RaisedButton(
-            child: Text(Translations.of(context).text('close')),
-            onPressed: (){
-              widget.reset();
-              Navigator.of(context).pop();
-            },
-          ):Container(),
+          SizedBox(
+            height: 10,
+          ),
+          finalizado
+              ? RaisedButton(
+                  child: Text(Translations.of(context).text('close')),
+                  onPressed: () {
+                    widget.reset();
+                    Navigator.of(context).pop();
+                  },
+                )
+              : Container(),
         ],
       ),
     );
   }
 
   descargaAll() async {
-    for(int i = 0; i<widget.mapas.length;i++){
+    for (int i = 0; i < widget.mapas.length; i++) {
       var mapa = widget.mapas[i];
 
       setState(() {
@@ -307,17 +281,17 @@ class DescargandoState extends State<Descargando> {
         fileName = mapa['mapName'];
       });
 
-      var url = mapa['mapUrl'][0] == '/'? mapa['mapUrl'].substring(1):mapa['mapUrl'];
+      var url = mapa['mapUrl'][0] == '/'
+          ? mapa['mapUrl'].substring(1)
+          : mapa['mapUrl'];
       url = '${SERVER}/$url';
 
-       await download(
-        printAvance: false,
-        url: url,
-        chProgress: true,
-        filename: mapa['mapFile'],
-        subdir: 'maps'
-      );
-
+      await download(
+          printAvance: false,
+          url: url,
+          chProgress: true,
+          filename: mapa['mapFile'],
+          subdir: 'maps');
     }
 
     setState(() {
@@ -332,53 +306,48 @@ class DescargandoState extends State<Descargando> {
     bool chProgress = true,
     bool printAvance = false,
   }) async {
-
     Dio dio = Dio();
     String dir = (await getApplicationDocumentsDirectory()).path;
 //    print('aaaa');
 
-    if(subdir != null){
+    if (subdir != null) {
       dir = '$dir/$subdir';
       print('DIR: $dir');
 
       var existeDir = await Directory(dir).exists();
-      if(!existeDir){
+      if (!existeDir) {
         print('No EXISTE');
-        await Directory(dir).create(recursive: true)
-            .then((Directory directory){
+        await Directory(dir)
+            .create(recursive: true)
+            .then((Directory directory) {
 //            print(directory.path);
         });
       }
     }
 
-
-    try{
-      await dio.download(url, '$dir/$filename', onReceiveProgress: (rec,total){
+    try {
+      await dio.download(url, '$dir/$filename',
+          onReceiveProgress: (rec, total) {
 //        print('rec: $rec, total: $total');
-        var porcentaje = ((rec/total)*100).toStringAsFixed(0);
-        var totStr = (total/1024/1024).toStringAsFixed(1);
-        var recStr = (rec/1024/1024).toStringAsFixed(1);
-      if(chProgress){
-        setState(() {
-          if(total == -1){
-            progreso = '-- MB / -- MB : -- %';
-          }else{
-            progreso = '$recStr MB / $totStr MB : $porcentaje %';
-          }
+        var porcentaje = ((rec / total) * 100).toStringAsFixed(0);
+        var totStr = (total / 1024 / 1024).toStringAsFixed(1);
+        var recStr = (rec / 1024 / 1024).toStringAsFixed(1);
+        if (chProgress) {
+          setState(() {
+            if (total == -1) {
+              progreso = '-- MB / -- MB : -- %';
+            } else {
+              progreso = '$recStr MB / $totStr MB : $porcentaje %';
+            }
 //          dlTotal = total;
-        });
-      }
-        if(printAvance){
+          });
+        }
+        if (printAvance) {
           print('$recStr MB / $totStr MB : $porcentaje %');
         }
       });
-    }catch(e){
-
-
+    } catch (e) {
       print(e);
     }
-
   }
-
-
 }

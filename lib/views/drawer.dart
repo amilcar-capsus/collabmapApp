@@ -1,16 +1,17 @@
-import 'package:siap/models/translations.dart';
+import 'package:siap_full/models/translations.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:siap/views/configuration/mapManager/mapManager.dart';
-import 'package:siap/views/configuration/settings/settings.dart';
-import 'package:siap/views/home/sync.dart';
-import 'package:siap/models/conexiones/DBEst.dart';
-import 'package:siap/models/conexiones/DB.dart';
-import 'package:siap/models/conexiones/api.dart';
-import 'package:siap/views/home/about.dart';
-import 'package:siap/views/home/privacidad.dart';
+import 'package:siap_full/views/configuration/mapManager/mapManager.dart';
+import 'package:siap_full/views/configuration/settings/settings.dart';
+import 'package:siap_full/views/home/sync.dart';
+import 'package:siap_full/models/conexiones/DBEst.dart';
+import 'package:siap_full/models/conexiones/DB.dart';
+import 'package:siap_full/models/conexiones/api.dart';
+import 'package:siap_full/views/home/about.dart';
+import 'package:siap_full/views/home/privacidad.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:siap/views/questionnaires/targets/targetsHome.dart';
+import 'package:siap_full/views/questionnaires/targets/targetsHome.dart';
+import 'package:siap_full/views/consultations/consultationsHome.dart';
 
 // Variables for SimpleDialog options
 enum Confirmation { yes, no }
@@ -91,6 +92,18 @@ class OpcionesState extends State<Opciones> {
                   new MaterialPageRoute(builder: (context) => TargetsHome()));
             }));
 
+    final consultations = PopupMenuItem(
+        value: 1,
+        child: Boton(
+            texto: Translations.of(context).text('siap'),
+            onClick: () {
+              Navigator.of(context).pop();
+              Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                      builder: (context) => ConsultationsHome()));
+            }));
+
     final privacidad = PopupMenuItem(
         value: 1,
         child: Boton(
@@ -113,9 +126,9 @@ class OpcionesState extends State<Opciones> {
         about,
         separador,
         privacidad,
-        //separador,
+        separador,
 //        mapManager,
-        //siap,
+        siap,
         separador,
         cerrarSesionBtn,
       ],

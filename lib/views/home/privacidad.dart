@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:siap/models/layout/paginaList.dart';
-import 'package:siap/models/translations.dart';
-import 'package:siap/models/conexiones/DB.dart';
-import 'package:siap/models/conexiones/api.dart';
+import 'package:siap_full/models/layout/paginaList.dart';
+import 'package:siap_full/models/translations.dart';
+import 'package:siap_full/models/conexiones/DB.dart';
+import 'package:siap_full/models/conexiones/api.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:siap/views/consultations/consultationsHome.dart';
+import 'package:siap_full/views/consultations/consultationsHome.dart';
 import 'home.dart';
 
 class Privacidad extends StatelessWidget {

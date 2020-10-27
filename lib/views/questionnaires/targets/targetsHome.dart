@@ -1,9 +1,9 @@
-import 'package:siap/models/componentes/iconos.dart';
+import 'package:siap_full/models/componentes/iconos.dart';
 import 'package:flutter/material.dart';
-import 'package:siap/models/layout/paginaList.dart';
-import 'package:siap/models/translations.dart';
-import 'package:siap/models/conexiones/DB.dart';
-import 'package:siap/models/layout/sliderPagina.dart';
+import 'package:siap_full/models/layout/paginaList.dart';
+import 'package:siap_full/models/translations.dart';
+import 'package:siap_full/models/conexiones/DB.dart';
+import 'package:siap_full/models/layout/sliderPagina.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:strings/strings.dart';
@@ -40,10 +40,11 @@ class TargetsHome extends StatelessWidget {
     ''');
 
     trgts ??= [];
-    for(int i = 0; i<trgts.length;i++){
-      var dims = await db.query("SELECT * FROM Dimensiones WHERE type = 'structure' AND elemId = ${trgts[i]['id']} ");
+    for (int i = 0; i < trgts.length; i++) {
+      var dims = await db.query(
+          "SELECT * FROM Dimensiones WHERE type = 'structure' AND elemId = ${trgts[i]['id']} ");
       dims ??= [];
-      if(dims.length>0){
+      if (dims.length > 0) {
         targets.add(trgts[i]);
       }
     }
@@ -51,8 +52,9 @@ class TargetsHome extends StatelessWidget {
     return targets;
   }
 
-  elemento({var datos}){
-    return UserTarget(datos: datos,);
+  elemento({var datos}) {
+    return UserTarget(
+      datos: datos,
+    );
   }
 }
-

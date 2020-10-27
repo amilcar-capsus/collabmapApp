@@ -1,33 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:siap/models/layout/paginaList.dart';
-import 'package:siap/views/barra.dart';
-import 'package:siap/views/verCuestionario/cuestionario.dart';
+import 'package:siap_full/models/layout/paginaList.dart';
+import 'package:siap_full/views/barra.dart';
+import 'package:siap_full/views/verCuestionario/cuestionario.dart';
 
-
-
-class VerCuestionario extends StatefulWidget{
-
+class VerCuestionario extends StatefulWidget {
   int _vId;
   VerCuestionario(this._vId);
 
   @override
   VerCuestionarioState createState() => VerCuestionarioState(_vId);
-
-
 }
 
-class VerCuestionarioState extends State<VerCuestionario>{
-
-
+class VerCuestionarioState extends State<VerCuestionario> {
   int _vId;
-  VerCuestionarioState(int vId){
+  VerCuestionarioState(int vId) {
     this._vId = vId;
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return Pagina(
       drawer: false,
       esLista: false,
@@ -39,5 +30,4 @@ class VerCuestionarioState extends State<VerCuestionario>{
       textoVacio: '',
     );
   }
-
 }

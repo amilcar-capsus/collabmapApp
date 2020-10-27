@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:siap/views/home/sync.dart';
+import 'package:siap_full/views/home/sync.dart';
 
-import 'package:siap/views/consultations/consultationsHome.dart'; // targetsHome
-import 'package:siap/views/questionnaires/targets/targetsHome.dart';
+import 'package:siap_full/views/consultations/consultationsHome.dart'; // targetsHome
+import 'package:siap_full/views/questionnaires/targets/targetsHome.dart';
 import 'privacidad.dart';
 
 class Home extends StatefulWidget {

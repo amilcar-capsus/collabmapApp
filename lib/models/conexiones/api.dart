@@ -4,13 +4,13 @@ import 'package:http/http.dart' as http;
 //import 'package:http/http.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:siap/models/conexiones/sendDatos.dart';
-import 'package:siap/views/login/conexion.dart';
+import 'package:siap_full/models/conexiones/sendDatos.dart';
+import 'package:siap_full/views/login/conexion.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:siap/models/conexiones/DB.dart';
+import 'package:siap_full/models/conexiones/DB.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:siap/models/translations.dart';
+import 'package:siap_full/models/translations.dart';
 import 'package:latlong/latlong.dart';
 
 //String urlHtml = 'http://paraguaytest.collabmap.in';

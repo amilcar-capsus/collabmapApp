@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:siap/models/translations.dart';
-import 'package:siap/views/barra.dart';
-import 'package:siap/views/drawer.dart';
+import 'package:siap_full/models/translations.dart';
+import 'package:siap_full/views/barra.dart';
+import 'package:siap_full/views/drawer.dart';
 import 'sliderPagina.dart';
 
 class Pagina extends StatefulWidget {
-
   var elemento;
   String textoVacio;
   var future;
@@ -34,7 +33,6 @@ class Pagina extends StatefulWidget {
 
   @override
   PaginaState createState() => PaginaState();
-
 }
 
 class PaginaState extends State<Pagina> {
@@ -65,51 +63,48 @@ class PaginaState extends State<Pagina> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Image.asset('images/fondo.png')
-              ],
+              children: <Widget>[Image.asset('images/fondo.png')],
             ),
             Container(
               child: ListView(
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.only(top: 15),
-                    child: widget.nombrePagina != null?
-                    Text(
-                      widget.nombrePagina,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20
-                      ),
-                    ):
-                    Container(),
+                    child: widget.nombrePagina != null
+                        ? Text(
+                            widget.nombrePagina,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20),
+                          )
+                        : Container(),
                   ),
-                  widget.esLista?Lista(
-                    future: widget.future,
-                    elemento: widget.elemento,
-                    textoVacio: widget.textoVacio,
-                  ):(widget.slider?
-                  SliderPagina(
-                    future: widget.future,
-                    elemento: widget.elemento,
-                    textoVacio: widget.textoVacio,
-                    height: widget.sliderHeight,
-                  ):
-                  widget.elemento),
+                  widget.esLista
+                      ? Lista(
+                          future: widget.future,
+                          elemento: widget.elemento,
+                          textoVacio: widget.textoVacio,
+                        )
+                      : (widget.slider
+                          ? SliderPagina(
+                              future: widget.future,
+                              elemento: widget.elemento,
+                              textoVacio: widget.textoVacio,
+                              height: widget.sliderHeight,
+                            )
+                          : widget.elemento),
                 ],
               ),
             )
           ],
         ),
-        drawer: widget.drawer?Opciones():null,
+        drawer: widget.drawer ? Opciones() : null,
       ),
     );
   }
 }
 
 class Lista extends StatefulWidget {
-
   var elemento;
   String textoVacio;
   var future;
@@ -122,16 +117,14 @@ class Lista extends StatefulWidget {
 
   @override
   ListaState createState() => ListaState();
-
 }
 
 class ListaState extends State<Lista> {
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: getDatos(),
-      builder: (context,snapshot){
+      builder: (context, snapshot) {
         List<Widget> rows = [];
         switch (snapshot.connectionState) {
           case ConnectionState.none:
@@ -140,12 +133,12 @@ class ListaState extends State<Lista> {
           case ConnectionState.waiting:
             return Text(Translations.of(context).text('waiting'));
           case ConnectionState.done:
-            if (snapshot.hasError){
+            if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             }
             List elementos = snapshot.data;
 //            print('DATA : ${snapshot.data}');
-            if(snapshot.data.length == 0){
+            if (snapshot.data.length == 0) {
               return Container(
                 height: 100,
                 child: Center(
@@ -153,10 +146,11 @@ class ListaState extends State<Lista> {
                 ),
               );
             }
-            for(int i = 0; i < elementos.length; i++){
-
+            for (int i = 0; i < elementos.length; i++) {
 //              print(elementos[i]);
-              rows.add(widget.elemento(datos: elementos[i],));
+              rows.add(widget.elemento(
+                datos: elementos[i],
+              ));
             }
 
             return Container(
@@ -168,7 +162,6 @@ class ListaState extends State<Lista> {
           default:
             return Column();
         }
-
       },
     );
   }
@@ -176,6 +169,4 @@ class ListaState extends State<Lista> {
   Future<List> getDatos() async {
     return widget.future;
   }
-
 }
-

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:siap/models/conexiones/DB.dart';
-import 'package:siap/views/contestaCuestionario/bloques.dart';
-import 'package:siap/views/contestaCuestionario/areas.dart';
-import 'package:siap/views/contestaCuestionario/preguntasCont.dart';
-import 'package:siap/models/cuestionario/checklist.dart';
-import 'package:siap/views/contestaCuestionario/multimedia.dart';
-import 'package:siap/views/verCuestionario/verCuestionario.dart';
-import 'package:siap/views/verCuestionario/cuestionario.dart';
+import 'package:siap_full/models/conexiones/DB.dart';
+import 'package:siap_full/views/contestaCuestionario/bloques.dart';
+import 'package:siap_full/views/contestaCuestionario/areas.dart';
+import 'package:siap_full/views/contestaCuestionario/preguntasCont.dart';
+import 'package:siap_full/models/cuestionario/checklist.dart';
+import 'package:siap_full/views/contestaCuestionario/multimedia.dart';
+import 'package:siap_full/views/verCuestionario/verCuestionario.dart';
+import 'package:siap_full/views/verCuestionario/cuestionario.dart';
 
 import 'dart:io';
 import 'dart:async';

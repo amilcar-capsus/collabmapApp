@@ -1,17 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:siap/models/conexiones/api.dart';
+import 'package:siap_full/models/conexiones/api.dart';
 
-Future<Post> loginPost(String username,String password) async {
+Future<Post> loginPost(String username, String password) async {
   String url;
   var response;
   bool error = false;
-  try{
+  try {
     url = '${SERVER}users/login/';
 //    print('asasas: $url');
-    response = await http.post(url,body:{'username':username,'pwd':password});
-  }catch(e){
+    response =
+        await http.post(url, body: {'username': username, 'pwd': password});
+  } catch (e) {
     error = true;
   }
 //  print('aaa');
@@ -25,7 +26,6 @@ Future<Post> loginPost(String username,String password) async {
 //    print(response.body);
     return Post.fromJson(json.decode(response.body));
   } else {
-
 //    print('Inicia respuesta del server Err');
 //    print(response.body);
 //    print('Finaliza respuesta del server Err');
@@ -41,14 +41,10 @@ class Post {
   final String name;
   final int userId;
 
-  Post({this.token,this.userId,this.name});
+  Post({this.token, this.userId, this.name});
 
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
-      token: json['token'],
-      userId: json['usrId'],
-      name: json['name']
-    );
+        token: json['token'], userId: json['usrId'], name: json['name']);
   }
 }
-

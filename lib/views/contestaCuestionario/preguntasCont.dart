@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:siap/models/cuestionario/checklist.dart';
-import 'package:siap/views/contestaCuestionario/pregunta.dart';
-import 'package:siap/views/contestaCuestionario/bloques.dart';
-import 'package:siap/views/contestaCuestionario/areas.dart';
-import 'package:siap/views/contestaCuestionario/general.dart';
-import 'package:siap/views/contestaCuestionario/fotografias.dart';
-import 'package:siap/views/contestaCuestionario/instalaciones.dart';
+import 'package:siap_full/models/cuestionario/checklist.dart';
+import 'package:siap_full/views/contestaCuestionario/pregunta.dart';
+import 'package:siap_full/views/contestaCuestionario/bloques.dart';
+import 'package:siap_full/views/contestaCuestionario/areas.dart';
+import 'package:siap_full/views/contestaCuestionario/general.dart';
+import 'package:siap_full/views/contestaCuestionario/fotografias.dart';
+import 'package:siap_full/views/contestaCuestionario/instalaciones.dart';
 
-
-class PreguntasCont extends StatefulWidget{
-
+class PreguntasCont extends StatefulWidget {
   GlobalKey<BloquesBtnState> keyBloques;
   GlobalKey<AreasState> keyAreas;
   GlobalKey<PreguntaState> keyPregunta;
   GlobalKey<PreguntasContState> llave;
-
 
   Checklist chk;
   String bId;
@@ -32,47 +29,38 @@ class PreguntasCont extends StatefulWidget{
     this.keyAreas,
     this.keyBloques,
     this.keyPregunta,
-  }) : super(key:key);
+  }) : super(key: key);
 
   @override
   PreguntasContState createState() => PreguntasContState(
-    chk:chk,
-    bId:bId,
-    aId:aId,
-    pId:pId,
-    pagina:pagina,
-  );
-
+        chk: chk,
+        bId: bId,
+        aId: aId,
+        pId: pId,
+        pagina: pagina,
+      );
 }
 
-class PreguntasContState extends State<PreguntasCont>{
-
+class PreguntasContState extends State<PreguntasCont> {
   String bId;
   String aId;
   String pId;
   Checklist chk;
   String pagina;
 
-  PreguntasContState({
-    this.chk,
-    this.bId,
-    this.aId,
-    this.pId,
-    this.pagina
-  });
+  PreguntasContState({this.chk, this.bId, this.aId, this.pId, this.pagina});
 
   TextEditingController justificacionControlador = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    
 //    print('PAGINA $pagina');
-    switch(pagina){
+    switch (pagina) {
       case 'preguntas':
 //        print(chk.est);
         return Center(
           child: Pregunta(
-            key:widget.keyPregunta,
+            key: widget.keyPregunta,
             chk: chk,
             KeyPreguntas: widget.key,
             keyAreas: widget.keyAreas,
@@ -102,13 +90,11 @@ class PreguntasContState extends State<PreguntasCont>{
           keyBloques: widget.keyBloques,
         );
     }
-
   }
 
-  cambiaPagina(pag){
+  cambiaPagina(pag) {
     setState(() {
       pagina = pag;
     });
   }
-
 }

@@ -6,17 +6,17 @@ import 'package:latlong/latlong.dart';
 import 'dart:io';
 import 'dart:math';
 import 'catSel.dart';
-import 'package:siap/models/conexiones/DB.dart';
+import 'package:siap_full/models/conexiones/DB.dart';
 import 'barrita.dart';
 import 'barraEdtProblema.dart';
-import 'package:siap/models/translations.dart';
+import 'package:siap_full/models/translations.dart';
 import 'package:poly/poly.dart' as Poly;
-import 'package:siap/models/layout/iconos.dart';
+import 'package:siap_full/models/layout/iconos.dart';
 import 'package:extended_math/extended_math.dart';
-import 'package:siap/views/maps/botones.dart';
+import 'package:siap_full/views/maps/botones.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:siap/models/conexiones/api.dart';
+import 'package:siap_full/models/conexiones/api.dart';
 
 class MapWidget extends StatefulWidget {
   Map datos;

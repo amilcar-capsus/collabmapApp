@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:siap/models/cuestionario/checklist.dart';
-import 'package:siap/views/contestaCuestionario/preguntasCont.dart';
-import 'package:siap/views/contestaCuestionario/bloques.dart';
-import 'package:siap/views/contestaCuestionario/areas.dart';
+import 'package:siap_full/models/cuestionario/checklist.dart';
+import 'package:siap_full/views/contestaCuestionario/preguntasCont.dart';
+import 'package:siap_full/views/contestaCuestionario/bloques.dart';
+import 'package:siap_full/views/contestaCuestionario/areas.dart';
 import 'spatial.dart';
 
-import 'package:siap/views/maps/map.dart';
+import 'package:siap_full/views/maps/map.dart';
 
 class Pregunta extends StatefulWidget {
   GlobalKey<BloquesBtnState> keyBloques;

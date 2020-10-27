@@ -1,10 +1,10 @@
-import 'package:siap/views/consultations/consultationsHome.dart';
-import 'package:siap/views/drawer.dart';
+import 'package:siap_full/views/consultations/consultationsHome.dart';
+import 'package:siap_full/views/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:siap/views/home/sync.dart';
-import 'package:siap/models/componentes/iconos.dart';
-import 'package:siap/models/translations.dart';
+import 'package:siap_full/views/home/sync.dart';
+import 'package:siap_full/models/componentes/iconos.dart';
+import 'package:siap_full/models/translations.dart';
 
 import '../main.dart';
 import 'locales.dart';
@@ -96,7 +96,7 @@ class BarraState extends State<Barra> {
             underline: SizedBox(),
           ),
         ),
-        !widget.sync
+        /* !widget.sync
             ? Padding(
                 padding: EdgeInsets.all(3.0),
                 child: IconButton(
@@ -107,7 +107,7 @@ class BarraState extends State<Barra> {
                   //    builder: (context) => targetsHome())),
                 ),
               )
-            : Container(),
+            : Container(), */
         !widget.sync
             ? IconButton(
                 icon: Icono(

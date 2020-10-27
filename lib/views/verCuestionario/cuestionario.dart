@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:siap/models/cuestionario/checklist.dart';
-import 'package:siap/models/conexiones/DB.dart';
+import 'package:siap_full/models/cuestionario/checklist.dart';
+import 'package:siap_full/models/conexiones/DB.dart';
 import 'package:html/parser.dart';
 
 class Cuestionario extends StatefulWidget {

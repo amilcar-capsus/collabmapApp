@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:siap/models/componentes/iconos.dart';
-import 'package:siap/models/translations.dart';
+import 'package:siap_full/models/componentes/iconos.dart';
+import 'package:siap_full/models/translations.dart';
 
 class TarjetaConsultation extends StatelessWidget {
-
   Map datos;
   Color color;
   var icon;
 
-  TarjetaConsultation({
-    this.datos,
-    this.color,
-    this.icon
-  });
+  TarjetaConsultation({this.datos, this.color, this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +30,7 @@ class TarjetaConsultation extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    '${datos['actual'] == 'true'?datos['finishDate']:datos['initDate']}',
+                    '${datos['actual'] == 'true' ? datos['finishDate'] : datos['initDate']}',
                     style: TextStyle(
                       color: Colors.grey[500],
                       fontWeight: FontWeight.bold,
@@ -54,7 +49,9 @@ class TarjetaConsultation extends StatelessWidget {
 //                      fontSize: 17,
 //                    ),
 //                  ),
-                  SizedBox(height: 5,),
+                  SizedBox(
+                    height: 5,
+                  ),
                   Text(
                     '${datos['name']}',
                     style: TextStyle(
@@ -76,7 +73,7 @@ class TarjetaConsultation extends StatelessWidget {
                   Container(
                     child: Image.asset(
                       'images/icons/fondoIcono.png',
-                      width: MediaQuery.of(context).size.width*.195,
+                      width: MediaQuery.of(context).size.width * .195,
                     ),
                   ),
                   icon,

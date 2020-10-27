@@ -1,30 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:siap/models/conexiones/DB.dart';
-import 'package:siap/models/translations.dart';
-import 'package:siap/models/componentes/boton.dart';
+import 'package:siap_full/models/conexiones/DB.dart';
+import 'package:siap_full/models/translations.dart';
+import 'package:siap_full/models/componentes/boton.dart';
 import 'survey.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:siap/views/consultations/downloadMaps.dart';
-import 'package:siap/views/consultations/chkAction.dart';
+import 'package:siap_full/views/consultations/downloadMaps.dart';
+import 'package:siap_full/views/consultations/chkAction.dart';
 
 class Surveys extends StatefulWidget {
   var consultationId;
   String consultationName;
-  Surveys({this.consultationId,this.consultationName});
+  Surveys({this.consultationId, this.consultationName});
 
   @override
   SurveysState createState() => SurveysState();
 }
 
 class SurveysState extends State<Surveys> {
-
-
   @override
   Widget build(BuildContext context) {
-
     return FutureBuilder(
       future: getData(),
-      builder: (context,snapshot){
+      builder: (context, snapshot) {
         List<Widget> rows = [];
         switch (snapshot.connectionState) {
           case ConnectionState.none:
@@ -33,11 +30,11 @@ class SurveysState extends State<Surveys> {
           case ConnectionState.waiting:
             return Text(Translations.of(context).text('waiting'));
           case ConnectionState.done:
-            if (snapshot.hasError){
+            if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             }
             List elementos = snapshot.data;
-            if(elementos.length == 0){
+            if (elementos.length == 0) {
               return Container(
                 height: 100,
                 child: Center(
@@ -45,10 +42,14 @@ class SurveysState extends State<Surveys> {
                 ),
               );
             }
-            rows.add(DownloadMap(consultationId: widget.consultationId,));
-            for(int i = 0; i < elementos.length; i++){
+            rows.add(DownloadMap(
+              consultationId: widget.consultationId,
+            ));
+            for (int i = 0; i < elementos.length; i++) {
 //              print(elementos[i]);
-              rows.add(elemento(datos: elementos[i],));
+              rows.add(elemento(
+                datos: elementos[i],
+              ));
             }
             return Container(
               padding: EdgeInsets.all(15),
@@ -59,14 +60,12 @@ class SurveysState extends State<Surveys> {
           default:
             return Column();
         }
-
       },
     );
   }
 
   Future<List> getData() async {
     DB db = DB.instance;
-
 
     List datos = await db.query('''
         SELECT c.* 
@@ -81,14 +80,11 @@ class SurveysState extends State<Surveys> {
 //    print('DATOS: $datos');
 
     List datosExt = [];
-    for(int i = 0;i<datos.length;i++){
+    for (int i = 0; i < datos.length; i++) {
 //      print('I: $i');
 
       Map dato = Map.from(datos[i]);
       datosExt.add(dato);
-
-
-
     }
 
 //    var vis = await db.query("SELECT * FROM Visitas WHERE type = 'cons'");
@@ -98,36 +94,33 @@ class SurveysState extends State<Surveys> {
     return datosExt;
   }
 
-  elemento({var datos}){
+  elemento({var datos}) {
 //    print('Datos: $datos');
     return Container(
       decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.grey[300]
-          ),
-          top: BorderSide(
-            color: Colors.grey[300]
-          ),
-        )
-      ),
+          border: Border(
+        bottom: BorderSide(color: Colors.grey[300]),
+        top: BorderSide(color: Colors.grey[300]),
+      )),
       child: Boton(
         texto: datos['name'],
-        onClick: (){
-          if(datos['avanceDouble'] >= 100){
+        onClick: () {
+          if (datos['avanceDouble'] >= 100) {
             //ToDo: Descomentar el return;
 //            return;
           }
-          Navigator.push(context,
-              new MaterialPageRoute(builder: (context)=>
-                  Survey(
-                    id: datos['id'],
-                    datos:datos,
-                  )
-              )
-          );
+          Navigator.push(
+              context,
+              new MaterialPageRoute(
+                  builder: (context) => Survey(
+                        id: datos['id'],
+                        datos: datos,
+                      )));
         },
-        icono: Icon(Icons.add,color: Colors.white,),
+        icono: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
         color: Colors.white,
         widget: true,
         elemento: Column(
@@ -143,20 +136,21 @@ class SurveysState extends State<Surveys> {
                       datos['nombre'],
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold
-                      ),
+                          color: Colors.black, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Expanded(
-                    flex: 1,
-                    child: ChkAction(datChk: datos,consultationId: widget.consultationId,)
+                      flex: 1,
+                      child: ChkAction(
+                        datChk: datos,
+                        consultationId: widget.consultationId,
+                      )
 //                    child: Text(
 //                      'continuar',
 //                      textAlign: TextAlign.right,
 //                      style: TextStyle(color: Colors.black),
 //                    ),
-                  ),
+                      ),
                 ],
               ),
             ),
@@ -176,6 +170,4 @@ class SurveysState extends State<Surveys> {
       ),
     );
   }
-
 }
-
