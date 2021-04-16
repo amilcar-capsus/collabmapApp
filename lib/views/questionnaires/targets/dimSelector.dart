@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:siap_monitoring/models/conexiones/DB.dart';
-import 'package:siap_monitoring/models/translations.dart';
+import 'package:chacarita/models/conexiones/DB.dart';
+import 'package:chacarita/models/translations.dart';
 
 class DimSelector extends StatefulWidget {
   int dimensionesId;

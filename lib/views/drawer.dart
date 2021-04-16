@@ -1,16 +1,16 @@
-import 'package:siap_monitoring/models/translations.dart';
+import 'package:chacarita/models/translations.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:siap_monitoring/views/configuration/mapManager/mapManager.dart';
-import 'package:siap_monitoring/views/configuration/settings/settings.dart';
-import 'package:siap_monitoring/views/home/sync.dart';
-import 'package:siap_monitoring/models/conexiones/DBEst.dart';
-import 'package:siap_monitoring/models/conexiones/DB.dart';
-import 'package:siap_monitoring/models/conexiones/api.dart';
-import 'package:siap_monitoring/views/home/about.dart';
-import 'package:siap_monitoring/views/home/privacidad.dart';
+import 'package:chacarita/views/configuration/mapManager/mapManager.dart';
+import 'package:chacarita/views/configuration/settings/settings.dart';
+import 'package:chacarita/views/home/sync.dart';
+import 'package:chacarita/models/conexiones/DBEst.dart';
+import 'package:chacarita/models/conexiones/DB.dart';
+import 'package:chacarita/models/conexiones/api.dart';
+import 'package:chacarita/views/home/about.dart';
+import 'package:chacarita/views/home/privacidad.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:siap_monitoring/views/questionnaires/targets/targetsHome.dart';
+import 'package:chacarita/views/questionnaires/targets/targetsHome.dart';
 
 // Variables for SimpleDialog options
 enum Confirmation { yes, no }

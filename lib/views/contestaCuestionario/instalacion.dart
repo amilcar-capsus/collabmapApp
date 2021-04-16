@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:siap_monitoring/views/questionnaires/targets/targetsElemsList.dart';
-import 'package:siap_monitoring/models/cuestionario/checklist.dart';
+import 'package:chacarita/views/questionnaires/targets/targetsElemsList.dart';
+import 'package:chacarita/models/cuestionario/checklist.dart';
 
 class Instalacion extends StatelessWidget {
   Checklist chk;

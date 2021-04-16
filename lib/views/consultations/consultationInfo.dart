@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:siap_monitoring/models/layout/paginaList.dart';
-import 'package:siap_monitoring/models/componentes/iconos.dart';
-import 'package:siap_monitoring/models/translations.dart';
+import 'package:chacarita/models/layout/paginaList.dart';
+import 'package:chacarita/models/componentes/iconos.dart';
+import 'package:chacarita/models/translations.dart';
 import 'consultation.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 class ConsultationInfo extends StatelessWidget {
-
   var datos;
   Color color;
   bool actual;
 
-  ConsultationInfo({this.datos,this.color,this.actual});
+  ConsultationInfo({this.datos, this.color, this.actual});
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +18,7 @@ class ConsultationInfo extends StatelessWidget {
     String iconNom = datos['icon'];
     iconNom = iconNom.replaceAll('fa-', '');
 
-
-    double tamanoIcono = MediaQuery.of(context).size.width*.25;
+    double tamanoIcono = MediaQuery.of(context).size.width * .25;
     var icon = Container(
 //      padding: EdgeInsets.only(top:tamanoIcono*.10,left: tamanoIcono*.15),
 //      height: tamanoIcono,
@@ -30,7 +28,7 @@ class ConsultationInfo extends StatelessWidget {
 //        widthFactor: tamanoIcono,
         child: Icon(
           FA.icono[iconNom],
-          size: tamanoIcono*.49,
+          size: tamanoIcono * .49,
           color: color,
         ),
       ),
@@ -43,39 +41,40 @@ class ConsultationInfo extends StatelessWidget {
         padding: EdgeInsets.all(20),
         child: Column(
           children: <Widget>[
-            SizedBox(height: MediaQuery.of(context).size.height*.01,),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * .01,
+            ),
             Text(
               datos['pName'].toUpperCase(),
               style: TextStyle(
-                color: Colors.grey[600],
-                fontSize: MediaQuery.of(context).size.height*.03
-              ),
+                  color: Colors.grey[600],
+                  fontSize: MediaQuery.of(context).size.height * .03),
             ),
             Text(
               datos['name'].toUpperCase(),
               style: TextStyle(
-                color: color,
-                fontWeight: FontWeight.bold,
-                fontSize: MediaQuery.of(context).size.height*.04
-              ),
+                  color: color,
+                  fontWeight: FontWeight.bold,
+                  fontSize: MediaQuery.of(context).size.height * .04),
             ),
             Text(
               '${datos['initDate']} / ${datos['finishDate'].toUpperCase()}',
               style: TextStyle(
                   color: Colors.grey[600],
                   fontWeight: FontWeight.bold,
-                  fontSize: MediaQuery.of(context).size.height*.02
-              ),
+                  fontSize: MediaQuery.of(context).size.height * .02),
             ),
-            SizedBox(height: MediaQuery.of(context).size.height*.02,),
             SizedBox(
-              height: tamanoIcono+10,
-              width: tamanoIcono+10,
+              height: MediaQuery.of(context).size.height * .02,
+            ),
+            SizedBox(
+              height: tamanoIcono + 10,
+              width: tamanoIcono + 10,
               child: Stack(
                 children: <Widget>[
                   Positioned(
-                    top:5,
-                    left:5,
+                    top: 5,
+                    left: 5,
                     child: Image.asset(
                       'images/icons/fondoIcono.png',
                       width: tamanoIcono,
@@ -86,60 +85,60 @@ class ConsultationInfo extends StatelessWidget {
               ),
             ),
 
-            SizedBox(height: MediaQuery.of(context).size.height*.03,),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * .03,
+            ),
 //            Text(
 //              datos['description'],
 //              textAlign: TextAlign.justify,
 //            ),
             Html(
-              data:'${datos['description']}',
+              data: '${datos['description']}',
               customTextAlign: (a) {
                 return TextAlign.justify;
               },
             ),
 
-            SizedBox(height: MediaQuery.of(context).size.height*.03,),
-            actual?RaisedButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                side: BorderSide(
-                  color:color,
-                  width: 2
-                ),
-              ),
-              onPressed: (){
-                Navigator.push(context,
-                    new MaterialPageRoute(builder: (context)=>
-                        Consultation(
-                          datos: datos,
-                          color: color,
-                          actual: actual,
-                        )
-                    )
-                );
-
-              },
-              color: Colors.white,
-              child: Container(
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 2,
-                      child: Center(
-                        child: Text(
-                            '${Translations.of(context).text('participate').toUpperCase()}',
-                            style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: color,
-                          ),
-                        ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * .03,
+            ),
+            actual
+                ? RaisedButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      side: BorderSide(color: color, width: 2),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) => Consultation(
+                                    datos: datos,
+                                    color: color,
+                                    actual: actual,
+                                  )));
+                    },
+                    color: Colors.white,
+                    child: Container(
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            flex: 2,
+                            child: Center(
+                              child: Text(
+                                '${Translations.of(context).text('participate').toUpperCase()}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: color,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                    )
-                  ],
-                ),
-              ),
-            ):
-            Container(),
+                    ),
+                  )
+                : Container(),
           ],
         ),
       ),
@@ -153,4 +152,3 @@ class Accion extends StatelessWidget {
     return Container();
   }
 }
-

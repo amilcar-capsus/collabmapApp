@@ -1,7 +1,6 @@
 /*___Generated_by_IDEA___*/
 
-package mx.capsus.siap_monitoring;
+package technology.up.chacarita;
 
 /* This stub is only used by the IDE. It is NOT the R class actually packed into the APK */
-public final class R {
-}
+public final class R {}

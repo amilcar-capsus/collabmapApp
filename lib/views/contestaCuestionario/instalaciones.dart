@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:siap_monitoring/views/questionnaires/targets/userTarget.dart';
-import 'package:siap_monitoring/views/questionnaires/targets/targetsElemsList.dart';
-import 'package:siap_monitoring/models/cuestionario/checklist.dart';
-import 'package:siap_monitoring/views/contestaCuestionario/bloques.dart';
-import 'package:siap_monitoring/views/contestaCuestionario/areas.dart';
-import 'package:siap_monitoring/views/contestaCuestionario/preguntasCont.dart';
-import 'package:siap_monitoring/views/contestaCuestionario/instalacionesList.dart';
-import 'package:siap_monitoring/views/contestaCuestionario/instalacionSel.dart';
+import 'package:chacarita/views/questionnaires/targets/userTarget.dart';
+import 'package:chacarita/views/questionnaires/targets/targetsElemsList.dart';
+import 'package:chacarita/models/cuestionario/checklist.dart';
+import 'package:chacarita/views/contestaCuestionario/bloques.dart';
+import 'package:chacarita/views/contestaCuestionario/areas.dart';
+import 'package:chacarita/views/contestaCuestionario/preguntasCont.dart';
+import 'package:chacarita/views/contestaCuestionario/instalacionesList.dart';
+import 'package:chacarita/views/contestaCuestionario/instalacionSel.dart';
 
 class Instalaciones extends StatefulWidget {
   Checklist chk;

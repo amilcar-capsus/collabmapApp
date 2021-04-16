@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'mapManager.dart';
-import 'package:siap_monitoring/models/translations.dart';
+import 'package:chacarita/models/translations.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
 class TarjetaInfo extends StatefulWidget {
-
   var updateFnc;
   Map datos;
-  TarjetaInfo({this.updateFnc,this.datos});
+  TarjetaInfo({this.updateFnc, this.datos});
 
   @override
   TarjetaInfoState createState() => TarjetaInfoState();
-
 }
 
 class TarjetaInfoState extends State<TarjetaInfo> {
@@ -30,7 +28,7 @@ class TarjetaInfoState extends State<TarjetaInfo> {
                   flex: 5,
                   child: Text(
                     widget.datos['name'],
-                    style:TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
                 Expanded(
@@ -45,8 +43,8 @@ class TarjetaInfoState extends State<TarjetaInfo> {
                     padding: EdgeInsets.all(0),
                     icon: Icon(Icons.delete),
                     color: Colors.red,
-                    onPressed: (){
-                      delMap(context: context,datos: widget.datos);
+                    onPressed: () {
+                      delMap(context: context, datos: widget.datos);
                     },
                   ),
                 )
@@ -58,8 +56,7 @@ class TarjetaInfoState extends State<TarjetaInfo> {
     );
   }
 
-  Future<void> delMap({BuildContext context,Map datos}) async {
-
+  Future<void> delMap({BuildContext context, Map datos}) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -81,7 +78,7 @@ class TarjetaInfoState extends State<TarjetaInfo> {
             FlatButton(
               child: Text(Translations.of(context).text('delete')),
               onPressed: () {
-                delMapa(datos: widget.datos,context: context);
+                delMapa(datos: widget.datos, context: context);
               },
             ),
           ],
@@ -99,4 +96,3 @@ class TarjetaInfoState extends State<TarjetaInfo> {
     this.widget.updateFnc();
   }
 }
-

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:siap_monitoring/views/questionnaires/targets/userTarget.dart';
-import 'package:siap_monitoring/views/questionnaires/targets/targetsElemsList.dart';
-import 'package:siap_monitoring/views/contestaCuestionario/bloques.dart';
-import 'package:siap_monitoring/views/contestaCuestionario/areas.dart';
-import 'package:siap_monitoring/views/contestaCuestionario/pregunta.dart';
-import 'package:siap_monitoring/views/contestaCuestionario/preguntasCont.dart';
-import 'package:siap_monitoring/models/cuestionario/checklist.dart';
+import 'package:chacarita/views/questionnaires/targets/userTarget.dart';
+import 'package:chacarita/views/questionnaires/targets/targetsElemsList.dart';
+import 'package:chacarita/views/contestaCuestionario/bloques.dart';
+import 'package:chacarita/views/contestaCuestionario/areas.dart';
+import 'package:chacarita/views/contestaCuestionario/pregunta.dart';
+import 'package:chacarita/views/contestaCuestionario/preguntasCont.dart';
+import 'package:chacarita/models/cuestionario/checklist.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
-import 'package:siap_monitoring/models/conexiones/DB.dart';
+import 'package:chacarita/models/conexiones/DB.dart';
 
 class General extends StatefulWidget {
   GlobalKey<BloquesBtnState> keyBloques;

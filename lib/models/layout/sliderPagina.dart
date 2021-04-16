@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:siap_monitoring/models/translations.dart';
+import 'package:chacarita/models/translations.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class SliderPagina extends StatefulWidget {
@@ -24,12 +24,11 @@ class SliderPagina extends StatefulWidget {
 }
 
 class SliderPaginaState extends State<SliderPagina> {
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: getDatos(),
-      builder: (context,snapshot){
+      builder: (context, snapshot) {
         List<Widget> elems = [];
         switch (snapshot.connectionState) {
           case ConnectionState.none:
@@ -38,11 +37,11 @@ class SliderPaginaState extends State<SliderPagina> {
           case ConnectionState.waiting:
             return Text(Translations.of(context).text('waiting'));
           case ConnectionState.done:
-            if (snapshot.hasError){
+            if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             }
             List elementos = snapshot.data;
-            if(snapshot.data.length == 0){
+            if (snapshot.data.length == 0) {
               return Container(
                 height: 100,
                 child: Center(
@@ -50,8 +49,11 @@ class SliderPaginaState extends State<SliderPagina> {
                 ),
               );
             }
-            for(int i = 0; i < elementos.length; i++){
-              elems.add(widget.elemento(datos: elementos[i],color:widget.color,actual:widget.actual));
+            for (int i = 0; i < elementos.length; i++) {
+              elems.add(widget.elemento(
+                  datos: elementos[i],
+                  color: widget.color,
+                  actual: widget.actual));
             }
             return Column(
               children: <Widget>[
@@ -60,14 +62,12 @@ class SliderPaginaState extends State<SliderPagina> {
                   items: elems,
                   enableInfiniteScroll: false,
                 )
-
               ],
             );
 
           default:
             return Column();
         }
-
       },
     );
   }

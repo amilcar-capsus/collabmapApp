@@ -1,4 +1,4 @@
-package mx.capsus.siap_monitoring;
+package technology.up.chacarita;
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

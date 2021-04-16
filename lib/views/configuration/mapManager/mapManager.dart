@@ -1,14 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:siap_monitoring/views/barra.dart';
-import 'package:siap_monitoring/models/translations.dart';
+import 'package:chacarita/views/barra.dart';
+import 'package:chacarita/models/translations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:quiver/io.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:convert';
 import 'tarjetaInfo.dart';
-import 'package:siap_monitoring/models/conexiones/DB.dart';
+import 'package:chacarita/models/conexiones/DB.dart';
 
 class MapManager extends StatefulWidget {
   @override
@@ -16,7 +16,6 @@ class MapManager extends StatefulWidget {
 }
 
 class MapManagerState extends State<MapManager> {
-
   bool act = false;
 
   @override
@@ -36,7 +35,7 @@ class MapManagerState extends State<MapManager> {
           ),
           FutureBuilder(
             future: getConsult(),
-            builder: (context,snapshot){
+            builder: (context, snapshot) {
               List<Widget> rows = [];
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
@@ -45,14 +44,16 @@ class MapManagerState extends State<MapManager> {
                 case ConnectionState.waiting:
                   return Text(Translations.of(context).text('waiting'));
                 case ConnectionState.done:
-                  if (snapshot.hasError){
+                  if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   }
                   List tarjetas = snapshot.data;
 
-
-                  for(int i = 0; i < tarjetas.length; i++){
-                    rows.add(TarjetaInfo(datos: tarjetas[i],updateFnc: update,));
+                  for (int i = 0; i < tarjetas.length; i++) {
+                    rows.add(TarjetaInfo(
+                      datos: tarjetas[i],
+                      updateFnc: update,
+                    ));
                   }
 
                   return Container(
@@ -65,7 +66,6 @@ class MapManagerState extends State<MapManager> {
               }
               return Column();
             },
-
           )
         ],
       ),
@@ -77,27 +77,27 @@ class MapManagerState extends State<MapManager> {
 
     List consults = [];
 
-    var mapas = await db.query("SELECT mapFile,mapName FROM questions WHERE mapFile IS NOT NULL OR mapFile != '' GROUP BY mapFile");
+    var mapas = await db.query(
+        "SELECT mapFile,mapName FROM questions WHERE mapFile IS NOT NULL OR mapFile != '' GROUP BY mapFile");
 //    print('MAPAS: $mapas');
-
 
     SharedPreferences userData = await SharedPreferences.getInstance();
 
     String datosJson = await userData.getString('consultations');
 
-
     String dir = (await getApplicationDocumentsDirectory()).path;
 
-    for(int i = 0; i<mapas.length; i++){
+    for (int i = 0; i < mapas.length; i++) {
 //      print('mapFile: ${mapas[i]['mapFile']}');
       File map = await File('$dir/maps/${mapas[i]['mapFile']}');
-      if(!await map.exists()){
+      if (!await map.exists()) {
         continue;
       }
       Map datConsult = Map();
       datConsult['name'] = mapas[i]['mapName'];
       datConsult['fileName'] = mapas[i]['mapFile'];
-      datConsult['fileSize'] = (map.lengthSync()/1024/1014).toStringAsFixed(1);
+      datConsult['fileSize'] =
+          (map.lengthSync() / 1024 / 1014).toStringAsFixed(1);
 
       consults.add(datConsult);
     }
@@ -105,10 +105,9 @@ class MapManagerState extends State<MapManager> {
     return consults;
   }
 
-  update(){
+  update() {
     setState(() {
       act = true;
     });
   }
 }
-

@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:siap_monitoring/views/barra.dart';
-import 'package:siap_monitoring/models/translations.dart';
-import 'package:siap_monitoring/views/configuration/settings/sendProblems.dart';
+import 'package:chacarita/views/barra.dart';
+import 'package:chacarita/models/translations.dart';
+import 'package:chacarita/views/configuration/settings/sendProblems.dart';
 
 class Settings extends StatefulWidget {
-
   @override
   SettingsState createState() => SettingsState();
 }
 
 class SettingsState extends State<Settings> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

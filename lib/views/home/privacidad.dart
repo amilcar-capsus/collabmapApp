@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:siap_monitoring/models/layout/paginaList.dart';
-import 'package:siap_monitoring/models/translations.dart';
-import 'package:siap_monitoring/models/conexiones/DB.dart';
-import 'package:siap_monitoring/models/conexiones/api.dart';
+import 'package:chacarita/models/layout/paginaList.dart';
+import 'package:chacarita/models/translations.dart';
+import 'package:chacarita/models/conexiones/DB.dart';
+import 'package:chacarita/models/conexiones/api.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-//import 'package:siap_monitoring/views/consultations/consultationsHome.dart';
-import 'package:siap_monitoring/views/questionnaires/targets/targetsHome.dart';
+//import 'package:chacarita/views/consultations/consultationsHome.dart';
+import 'package:chacarita/views/questionnaires/targets/targetsHome.dart';
 import 'home.dart';
 
 class Privacidad extends StatelessWidget {

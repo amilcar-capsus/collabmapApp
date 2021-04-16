@@ -1,11 +1,11 @@
-//import 'package:siap_monitoring/views/consultations/consultationsHome.dart';
-import 'package:siap_monitoring/views/questionnaires/targets/targetsHome.dart';
-import 'package:siap_monitoring/views/drawer.dart';
+//import 'package:chacarita/views/consultations/consultationsHome.dart';
+import 'package:chacarita/views/questionnaires/targets/targetsHome.dart';
+import 'package:chacarita/views/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:siap_monitoring/views/home/sync.dart';
-import 'package:siap_monitoring/models/componentes/iconos.dart';
-import 'package:siap_monitoring/models/translations.dart';
+import 'package:chacarita/views/home/sync.dart';
+import 'package:chacarita/models/componentes/iconos.dart';
+import 'package:chacarita/models/translations.dart';
 
 import '../main.dart';
 import 'locales.dart';

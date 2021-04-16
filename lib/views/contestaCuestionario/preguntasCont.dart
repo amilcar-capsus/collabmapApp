@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:siap_monitoring/views/questionnaires/targets/userTarget.dart';
-import 'package:siap_monitoring/views/questionnaires/targets/targetsElemsList.dart';
-import 'package:siap_monitoring/models/cuestionario/checklist.dart';
-import 'package:siap_monitoring/views/contestaCuestionario/pregunta.dart';
-import 'package:siap_monitoring/views/contestaCuestionario/bloques.dart';
-import 'package:siap_monitoring/views/contestaCuestionario/areas.dart';
-import 'package:siap_monitoring/views/contestaCuestionario/general.dart';
-import 'package:siap_monitoring/views/contestaCuestionario/fotografias.dart';
-import 'package:siap_monitoring/views/contestaCuestionario/instalaciones.dart';
+import 'package:chacarita/views/questionnaires/targets/userTarget.dart';
+import 'package:chacarita/views/questionnaires/targets/targetsElemsList.dart';
+import 'package:chacarita/models/cuestionario/checklist.dart';
+import 'package:chacarita/views/contestaCuestionario/pregunta.dart';
+import 'package:chacarita/views/contestaCuestionario/bloques.dart';
+import 'package:chacarita/views/contestaCuestionario/areas.dart';
+import 'package:chacarita/views/contestaCuestionario/general.dart';
+import 'package:chacarita/views/contestaCuestionario/fotografias.dart';
+import 'package:chacarita/views/contestaCuestionario/instalaciones.dart';
 
 class PreguntasCont extends StatefulWidget {
   GlobalKey<BloquesBtnState> keyBloques;

@@ -5,11 +5,9 @@ import 'appBar.dart';
 import 'dart:io';
 import 'drawerEdt.dart';
 
-//import 'package:siap_monitoring/pages/tap_to_add.dart';
-
+//import 'package:chacarita/pages/tap_to_add.dart';
 
 class Consultation extends StatefulWidget {
-
   GlobalKey<MapWidgetState> keyMapa = GlobalKey();
   File tiles;
   List problems = [];
@@ -30,24 +28,20 @@ class Consultation extends StatefulWidget {
 
   @override
   ConsultationState createState() => ConsultationState(
-    question: question,
-    problems: problems,
-  );
+        question: question,
+        problems: problems,
+      );
 }
 
-class ConsultationState extends State<Consultation>{
-
+class ConsultationState extends State<Consultation> {
   GlobalKey<MapWidgetState> keyMapa = GlobalKey();
 
   Map question;
   List problems;
-  ConsultationState({this.question,this.problems});
+  ConsultationState({this.question, this.problems});
 
   @override
   Widget build(BuildContext context) {
-
-
-
     return Scaffold(
       appBar: Barra(),
 //      drawer: Opciones(_nivel,_accion),
@@ -59,19 +53,20 @@ class ConsultationState extends State<Consultation>{
 //        question: question,
 //        spatial: false,
 
-        key: keyMapa,
-        tiles: widget.tiles,
-        spatialData: widget.spatialData,
-        problems: widget.problems,
+          key: keyMapa,
+          tiles: widget.tiles,
+          spatialData: widget.spatialData,
+          problems: widget.problems,
+          question: widget.question,
+          spatial: false,
+          vId: widget.vId),
+      drawer: DrawerEdt(
         question: widget.question,
-        spatial: false,
-        vId:widget.vId
-
+        keyMapa: keyMapa,
+        vId: widget.vId,
       ),
-      drawer: DrawerEdt(question: widget.question,keyMapa: keyMapa,vId: widget.vId,),
 //      body: Container(),
 //      floatingActionButton: FancyFab(keyMapa: keyMapa,context: context,),
     );
-
   }
 }

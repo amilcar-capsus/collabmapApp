@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:siap_monitoring/models/componentes/iconos.dart';
+import 'package:chacarita/models/componentes/iconos.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-
 class Tarjeta extends StatelessWidget {
-
   Map datos;
   Tarjeta({this.datos});
 
@@ -63,7 +61,7 @@ class Tarjeta extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Container(
-              padding: EdgeInsets.only(left: 10,right: 10,top: 40),
+              padding: EdgeInsets.only(left: 10, right: 10, top: 40),
               child: Stack(
                 children: <Widget>[
                   Container(

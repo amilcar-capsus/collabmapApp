@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:siap_monitoring/models/layout/colores.dart';
-import 'package:siap_monitoring/views/questionnaires/targets/targetsElemsList.dart';
+import 'package:chacarita/models/layout/colores.dart';
+import 'package:chacarita/views/questionnaires/targets/targetsElemsList.dart';
 
 import 'targetsElemsAdd.dart';
 
